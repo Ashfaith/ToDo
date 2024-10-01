@@ -3,12 +3,7 @@ import project from "./project.js"
 const content = document.querySelector(".content")
 
 class NewProject {
-    constructor(title, description, priority, notes, dueDate) {
-        this.title = title;
-        this.description = description
-        this.priority = priority;
-        this.notes = notes;
-        this.dueDate = dueDate;
+    constructor() {
         //creates a form element to show in DOM
         this.form = document.createElement('form');
         //object containing form sections / names
@@ -18,7 +13,9 @@ class NewProject {
             {label: "Priority:", id: "priority", type: "number"},
             {label: "Notes:", id: "notes", type:"text"},
             {label: "Due date:", id: "due-date", type: "date"},
-        ]
+        ];
+
+        this.projectObj = {};
     } 
 
     buildForm() {
@@ -54,10 +51,21 @@ class NewProject {
         //prevents default action on the form
         this.form.addEventListener('submit', (e) => {
             e.preventDefault();
+            //creates and stores input values from form into an object
             const inputData = new FormData(this.form);
             const formObj = Object.fromEntries(inputData);
             console.log(formObj);
+
+            this.projectDisplay(formObj)
         });
+    }
+
+    projectDisplay(formObj) {
+        for(const key in formObj) {
+            const inputs = document.createElement('p');
+            inputs.innerText = `${key}: ${formObj[key]}`;
+            content.appendChild(inputs);
+        };
     }
 }
 
