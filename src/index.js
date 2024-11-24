@@ -1,28 +1,19 @@
-import NewProject from "./project.js";
-import Tasks from "./tasks.js"
+import ProjectView from "./projectView.js";
+import Data from "./projectData.js";
+import './styles.css'
 
-const content = document.querySelector(".content")
 
 //option to create a new project
-const newProjectBtn = document.querySelector("#new-project-btn");
-newProjectBtn.addEventListener('click', () => {
-    const project = new NewProject();
-    project.buildForm();
-    //gathers values from form
-    const createFormBtn = document.querySelector('#create-project');
-    createFormBtn.addEventListener('click', () => {
-        project.inputValues();
+
+const dataInstance = new Data();
+
+document.querySelector("#new-project-btn").addEventListener('click', () => {
+    const projectHandler = new ProjectView(dataInstance);
+    projectHandler.buildForm();
+
+    document.querySelector('#sort-by').addEventListener('click', () => {
+        projectHandler.sortBy();
+        console.log('wtf')
     });
 });
-
-content.addEventListener('click', (e) => {
-    if(e.target.querySelector('#add-task-btn')){
-        console.log("test");
-        const task = new Tasks();
-        task.addToObj();
-    }
-});
-
-
-
 

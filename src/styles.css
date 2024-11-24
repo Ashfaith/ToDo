@@ -1,0 +1,306 @@
+* {
+    border: 0;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.content {
+    display: flex;
+    height: 100vh;
+}
+
+.main-wrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: #005bb5;
+    width: 80%;
+    padding-left: 90px;
+    padding-right: 90px;
+    padding-top: 50px;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    background-color: #eeeeee; /* Light grey background */
+    width: 20%;
+    min-width: 310px;
+    padding-left: 20px;
+    padding-top: 15px;
+    height: 100%;
+    margin: 0;
+}
+
+.profile {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 150px;
+    margin-right: 30px;
+    font-size: 20px;
+    font-weight: var(--main-font-weight);
+}
+
+    #notification {
+        font-size: 30px;
+    }
+
+    #profile-picture {
+        border-radius: 50%;
+        max-width: 50px;
+    }
+
+#buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 350px;
+    margin: 35px;
+    margin-right: 80px;
+}
+
+.project-list {
+    margin-top: 50px;
+    display: flex; /* This arranges the items horizontally */
+    flex-direction: column; /* Ensures items stack vertically */
+    padding: 10px 0;
+}
+  
+  /* Styling for each menu item */
+  .menu-item {
+    position: relative; /* For positioning the hover effect */
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    margin-right: 20px;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 5px;
+  }
+  
+  /* Hover effect: rectangle around the menu item */
+  .menu-item::before {
+    content: ''; /* Empty content for the pseudo-element */
+    position: absolute;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease;
+    z-index: -1; /* Places the background behind the text */
+    border-radius: 5px;
+  }
+  
+  /* On hover, show the rectangular box */
+  .menu-item:hover {
+    background-color: #a8d2ff; /* Change background color on hover */
+    color: rgb(43, 43, 43); /* Change text color on hover */
+  }
+  
+  .menu-item:hover::before {
+    opacity: 1; /* Show the background box when hovered */
+  }
+
+
+  .form {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    height: auto; /* Let the height adjust based on content */
+    z-index: 9999;
+    background-color: #e8e8e8;
+    border-radius: 5px;
+    visibility: hidden; /* Initially hidden */
+    opacity: 0; /* Initially invisible */
+    transform: translate(-50%, -50%); /* Initially centered */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* When modal is visible */
+.form.show {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s ease, visibility 0s ease 0.3s;
+    transform: translate(-50%, -50%);
+}
+
+/* Project name styling */
+#project-name {
+    width: 100%;
+    font-size: 24px; 
+    font-weight: bold;
+    margin-bottom: 10px; 
+    border: none; 
+    padding: 8px;
+}
+
+/* Description styling */
+#description {
+    width: 100%;
+    font-size: 16px; /* Smaller font for description */
+    margin-bottom: 20px; /* Space between description and buttons */
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Container for the priority, due date, and create project button */
+.form-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /* Spread out items to the left and right */
+    width: 100%;
+    align-items: center; /* Vertically center buttons */
+}
+
+/* Priority and Due Date buttons */
+#priority, #due-date {
+    padding: 8px 16px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Create Project button */
+#create-project {
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: flex-end; /* Aligns to the right side */
+}
+
+/* Button hover effects */
+#priority:hover, #due-date:hover, #create-project:hover {
+    background-color: #ddd;
+}
+
+#create-project:hover {
+    background-color: #45a049; /* Darker green for create project */
+}
+
+.task-input {
+    border: none;
+    padding: 1rem;
+    border-radius: 1rem;
+    background: none;
+    transition: 0.3s;
+}
+
+.task-input:focus {
+    outline-color: none;
+    background: none;
+    outline: none;
+   }
+
+.proj-container {
+    display: flex;
+    justify-content:space-between;
+    flex-direction: row;
+    padding-bottom: 30px;
+    margin-bottom: 40px;
+    border-bottom:1px solid #4e4e4e ;
+}
+
+.proj-container div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    align-items: end;
+    justify-content: space-between;
+}
+
+.proj-container p:first-of-type {
+    font-size: larger;
+    font-weight: 600;
+}
+
+.delete-button {
+    background: none;
+    border: none;
+}
+
+.add-task-btn {
+    background: none;
+    border: none;
+}
+
+ /* Dropdown Button */
+.dropbtn {
+  background: none;
+  color: white;
+  padding: 8px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border-radius: 5px;
+}
+
+.dropbtn::before {
+  content: ''; /* Empty content for the pseudo-element */
+    position: absolute;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease;
+    z-index: -1; /* Places the background behind the text */
+    border-radius: 5px;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover {
+  background-color: #a8d2ff;
+}
+
+.dropbtn:hover::before {
+  opacity: 1;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  text-align: right;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;} 
+
+.main-hero {
+  margin-bottom: 10px;
+}
+
+
