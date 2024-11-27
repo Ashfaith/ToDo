@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=notifications_active" />
     <title>To Do</title>
 </head>
 <body>
@@ -15,14 +16,16 @@
                         <img id="main-pfp"></img>
                             <div id="greeting-container">
                                 <div id="greeting">Hi there,</div>
-                                <div id="user-handle">AshFaith</div>
+                                <div id="user-handle">User</div>
                             </div>    
                     </div>
                 </div>
                 <!-- profile right -->
                 <div id="profile-right">
                     <div id="notif-alert">
-                        <span id="notification" class="material-symbols-outlined">N!</span>
+                        <span id="notifications" class="material-symbols-outlined">
+                            notifications_active
+                            </span>
                     </div>
                 </div>
             </div>
@@ -43,7 +46,7 @@
             <div class="dropdown">
                 <button id="sort-by" class="dropbtn">Sort By</button>
                 <div id="myDropdown" class="dropdown-content">
-                    <a href="#" id="due-date">Due Date</a>
+                    <a href="#" id="due-date-sort">Due Date</a>
                     <a href="#" id="name">Name</a>
                     <a href="#" id="priority">Priority</a>
                 </div>

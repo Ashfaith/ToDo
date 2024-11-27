@@ -5,7 +5,7 @@ class TaskHandler {
         this.taskContainer = document.querySelector('.task-container')
         this.task = {};
         this.formLabels = [
-            {label: "Task Name:", id: "task-name", type: "text"},
+            // {label: "Task Name:", id: "task-name", type: "text"},
             {label: "Description:", id: "task-desc", type: "text"},
 
         ];
@@ -35,10 +35,10 @@ class TaskHandler {
 
         //action for the create task button
         this.taskForm.addEventListener('submit', (e) => {
-            const title = document.querySelector('#task-name').value;
+            // const title = document.querySelector('#task-name').value;
             const body = document.querySelector('#task-desc').value;
             e.preventDefault();
-            this.addTask(title, body);
+            this.addTask(body);
 
             this.renderAllTasks();
             //reset task form
@@ -58,22 +58,20 @@ class TaskHandler {
     }
 
     renderTask(task, index) {
-        
+        const taskDescCont = document.createElement('div');
+        taskDescCont.setAttribute('class', 'task-desc-cont')
+
         for(const key in task) {
             const inputs = document.createElement('p');
-            inputs.innerText = `${key} ${task[key]}`;
-            this.taskContainer.appendChild(inputs);
+            inputs.innerText = `${task[key]}`;
+            taskDescCont.appendChild(inputs);
         };
+        this.taskContainer.appendChild(taskDescCont);
         
         const deleteTskBtn = document.createElement('button');
         deleteTskBtn.innerText = 'X';
         deleteTskBtn.setAttribute('class', 'delete-tsk-btn');
         this.taskContainer.appendChild(deleteTskBtn);
-        
-        const editTskBtn = document.createElement('button');
-        editTskBtn.innerText = 'Edit Task';
-        editTskBtn.setAttribute('class', 'edit-tsk-btn');
-        this.taskContainer.appendChild(editTskBtn);
 
         this.projContainer.appendChild(this.taskContainer);
 
@@ -84,8 +82,8 @@ class TaskHandler {
     }
 
     // Add new task from form inputs
-    addTask(title, body) {
-        const task = {title, body};
+    addTask(body) {
+        const task = {body};
         this.projectData.tasks.push(task)
         console.log(this.projectData);
     }

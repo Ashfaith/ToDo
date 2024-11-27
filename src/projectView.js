@@ -67,6 +67,8 @@ class ProjectView {
                 console.log(this.getMoment().format('YYYY-MM-DD'));
             }
         });
+
+
         
         this.form.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -119,11 +121,13 @@ class ProjectView {
     projectDisplay(projects, index) {
         // Create a new container for the project
         const projContainer = document.createElement('div');
+        const topSection = document.createElement('div');
         const buttonCont = document.createElement('div');
         const infoCont = document.createElement('div');
 
         projContainer.setAttribute('class', 'proj-container');
         projContainer.setAttribute('data-project-id', index);
+        topSection.setAttribute('class', 'top-section');
 
         for(const key in projects) {
             const inputs = document.createElement('p');
@@ -136,7 +140,7 @@ class ProjectView {
             };
             infoCont.appendChild(inputs);
         };
-        projContainer.appendChild(infoCont);
+        topSection.appendChild(infoCont);
         
         
         // Create and add the delete button
@@ -151,7 +155,8 @@ class ProjectView {
         addTaskButton.setAttribute('class', 'add-task-btn');
         buttonCont.appendChild(addTaskButton);
         
-        projContainer.appendChild(buttonCont)
+        topSection.appendChild(buttonCont);
+        projContainer.appendChild(topSection);
 
         const taskContainer = document.createElement('div');
         taskContainer.setAttribute('class', 'task-container');
@@ -187,24 +192,23 @@ class ProjectView {
 
     sortBy() {
         
-        document.getElementById("myDropdown").classList.toggle("show");
+        const dropdownContent = document.querySelector(".dropdown-content");
+        dropdownContent.classList.toggle("show-drop");
 
-          
-          // Close the dropdown menu if the user clicks outside of it
-          window.onclick = function(e) {
+        // Close the dropdown if the user clicks outside
+        window.onclick = function(e) {
             if (!e.target.matches('.dropbtn')) {
-              const dropdowns = document.getElementsByClassName("dropdown-content");
-              let i;
-              for (i = 0; i < dropdowns.length; i++) {
-                const openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('show')) {
-                  openDropdown.classList.remove('show');
+                const dropdowns = document.getElementsByClassName("dropdown-content");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    const openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show-drop')) {
+                        openDropdown.classList.remove('show-drop');
+                    }
                 }
-              }
             }
-          }
+        }
 
-        document.querySelector('#due-date').addEventListener('click', () => {
+        document.querySelector('#due-date-sort').addEventListener('click', () => {
             this.main.innerHTML = '';
             this.dataInstance.sortByDate();
             this.showAllProjects()

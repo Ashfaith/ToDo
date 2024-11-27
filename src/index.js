@@ -13,7 +13,6 @@ document.querySelector("#new-project-btn").addEventListener('click', () => {
 
     document.querySelector('#sort-by').addEventListener('click', () => {
         projectHandler.sortBy();
-        console.log('wtf')
     });
 });
 

@@ -1,35 +1,6 @@
 class Data {
     constructor() {
-        this.projectsArr = [
-            {
-              "Name": "test",
-              "Description": "",
-              "Priority": "1",
-              "Due Date": "2024-11-18",
-              "tasks": []
-            },
-            {
-              "Name": "test 2",
-              "Description": "",
-              "Priority": "4",
-              "Due Date": "2024-11-02",
-              "tasks": []
-            },
-            {
-              "Name": "test 3",
-              "Description": "",
-              "Priority": "78",
-              "Due Date": "2024-11-17",
-              "tasks": []
-            },
-            {
-              "Name": "test 4",
-              "Description": "",
-              "Priority": "2",
-              "Due Date": "2024-11-29",
-              "tasks": []
-            }
-          ];
+        this.projectsArr = [];
     }
 
     addToArr(formData) {
