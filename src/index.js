@@ -6,13 +6,18 @@ import './styles.css'
 //option to create a new project
 
 const dataInstance = new Data();
+let projectHandler;
 
 document.querySelector("#new-project-btn").addEventListener('click', () => {
-    const projectHandler = new ProjectView(dataInstance);
+    projectHandler = new ProjectView(dataInstance);
     projectHandler.buildForm();
+});
 
-    document.querySelector('#sort-by').addEventListener('click', () => {
+document.querySelector('#sort-by').addEventListener('click', () => {
+    if (projectHandler) { 
         projectHandler.sortBy();
-    });
+    } else {
+        console.error('projectHandler not initialized');
+    }
 });
 

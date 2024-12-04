@@ -2,52 +2,54 @@ class TaskHandler {
     constructor(projectData, projContainer) {
         this.projectData = projectData;
         this.projContainer = projContainer;
-        this.taskContainer = document.querySelector('.task-container')
-        this.task = {};
+        this.taskContainer = projContainer.querySelector('.task-container')
         this.formLabels = [
             // {label: "Task Name:", id: "task-name", type: "text"},
-            {label: "Description:", id: "task-desc", type: "text"},
+            {label: "Task description", id: "task-desc", type: "text"},
 
         ];
-        this.taskForm = document.createElement('form');
     }
 
     generateTaskForm() {
-        this.formLabels.forEach(field =>{ 
-            const label = document.createElement('label');
-            label.setAttribute('for' , field.id);
-            label.innerText = field.label;
-            this.taskForm.appendChild(label);
-
-            const input = document.createElement('input');
-            input.setAttribute('type', field.type);
-            input.setAttribute('id', field.id);
-            input.setAttribute('name', field.label);
-            this.taskForm.appendChild(input);
-        })
-        
-        //creates submit button on this.takForm
+        const taskFormCont = document.createElement('div');
+        const taskForm = document.createElement('form');
+        taskFormCont.setAttribute('class', 'task-form-cont');
+    
+        this.formLabels.forEach(field => { 
+            const taskInput = document.createElement('input');
+            taskInput.setAttribute('type', field.type);
+            taskInput.setAttribute('id', field.id);
+            taskInput.setAttribute('name', field.label);
+            taskInput.setAttribute('placeholder', field.label);
+            taskForm.appendChild(taskInput);
+        });
+    
+        // Creates submit button on this.taskForm
         const submitTskBtn = document.createElement('input');
         submitTskBtn.setAttribute('type', 'submit');
         submitTskBtn.setAttribute('value', 'Create task');
         submitTskBtn.setAttribute('class', 'create-tsk-btn');
-        this.taskForm.appendChild(submitTskBtn);
-
-        //action for the create task button
-        this.taskForm.addEventListener('submit', (e) => {
-            // const title = document.querySelector('#task-name').value;
-            const body = document.querySelector('#task-desc').value;
+        taskForm.appendChild(submitTskBtn);
+    
+        taskFormCont.appendChild(taskForm);
+    
+        // Action for the create task button
+        taskForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            this.addTask(body);
-
+    
+            // Get the task description input directly from the form elements
+            const taskDescriptionValue = taskForm.querySelector('#task-desc').value;
+            console.log(taskDescriptionValue);
+            this.addTask(taskDescriptionValue);
             this.renderAllTasks();
-            //reset task form
-            this.taskForm.reset();
-            //clear the form render
-            this.taskForm.innerHTML = '';
-        })
+    
+            // Reset the task form
+            taskForm.reset();
 
-        return this.taskForm
+            taskFormCont.remove();
+        });
+    
+        return taskFormCont;
     }
 
     renderAllTasks() {
@@ -62,16 +64,19 @@ class TaskHandler {
         taskDescCont.setAttribute('class', 'task-desc-cont')
 
         for(const key in task) {
-            const inputs = document.createElement('p');
-            inputs.innerText = `${task[key]}`;
-            taskDescCont.appendChild(inputs);
+            const taskPropertyElement = document.createElement('p');
+            taskPropertyElement.innerText = `${task[key]}`;
+            taskDescCont.appendChild(taskPropertyElement);
         };
         this.taskContainer.appendChild(taskDescCont);
         
         const deleteTskBtn = document.createElement('button');
-        deleteTskBtn.innerText = 'X';
+        const icon = document.createElement('i');
+        icon.classList.add('material-symbols-outlined');
+        icon.innerText = 'close';
+        deleteTskBtn.appendChild(icon);
         deleteTskBtn.setAttribute('class', 'delete-tsk-btn');
-        this.taskContainer.appendChild(deleteTskBtn);
+        taskDescCont.appendChild(deleteTskBtn);
 
         this.projContainer.appendChild(this.taskContainer);
 
@@ -82,13 +87,13 @@ class TaskHandler {
     }
 
     // Add new task from form inputs
-    addTask(body) {
-        const task = {body};
+    addTask(taskDescriptionValue) {
+        const task = {taskDescriptionValue};
         this.projectData.tasks.push(task)
         console.log(this.projectData);
     }
 
-    deleteTask(task) {
+    deleteTask(task, index) {
         this.projectData.tasks.splice(task, 1)
         console.log(this.projectData);
         this.renderAllTasks();

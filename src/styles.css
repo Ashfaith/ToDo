@@ -118,7 +118,7 @@
 }
 
 /* When modal is visible */
-.form.show {
+.form.showForm {
   opacity: 1;
   transform: translate(-50%, -50%);
   pointer-events: auto;
@@ -138,8 +138,8 @@
 /* Description styling */
 #description {
     width: 100%;
-    font-size: 16px; /* Smaller font for description */
-    margin-bottom: 20px; /* Space between description and buttons */
+    font-size: 16px; 
+    margin-bottom: 20px; 
     padding: 8px;
     border: none;
     border-radius: 5px;
@@ -185,7 +185,7 @@
     background-color: #80b5e9; /* Darker green for create project */
 }
 
-.task-input {
+.form-input {
     border: none;
     padding: 1rem;
     border-radius: 1rem;
@@ -193,7 +193,7 @@
     transition: 0.3s;
 }
 
-.task-input:focus {
+.form-input:focus {
     outline-color: none;
     background: none;
     outline: none;
@@ -214,14 +214,6 @@
   justify-content: space-between;
 }
 
-.proj-container div:nth-child(2) {
-    display: flex;
-    flex-direction: column;
-    margin-left: auto;
-    align-items: end;
-    justify-content: space-between;
-}
-
 .proj-container p:first-of-type {
     font-size: 24px;
     font-weight: 600;
@@ -233,9 +225,22 @@
   color:#5d5d5d
 }
 
+.button-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .delete-button {
-  background: none;
-  border: none;
+  background: rgba(241, 93, 93, 0.66);
+  border-radius: .3rem;
+  padding: 4px;
+  color: rgb(255, 255, 255);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background: rgb(241, 93, 93)
 }
 
 .add-task-btn {
@@ -265,11 +270,36 @@
   opacity: 1;
 }
 
+#task-desc {
+  border: none;
+  width: 50%;
+  padding: .3rem;
+  margin-top: 8px;
+  border-radius: .5rem;
+  background: none;
+  transition: 0.3s;
+  border: 2px solid #d6d6d6;
+  outline: none;
+}
+
+#task-desc:focus {
+  border: 2px solid #80b5e9;
+}
+
 .task-container {
+  position: relative;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-wrap: no-wrap;
+  margin-top: 20px;
+}
+
+.task-form-cont form {
+  display: flex;
+  width: 100%;
+  gap: 5%;
+  align-items: center;
 }
 
 .task-desc-cont p:first-of-type {
@@ -280,9 +310,72 @@
   all: unset;
 }
 
-.delete-tsk-btn {
-  height: none;
+.task-desc-cont {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-bottom: 20px;
+  justify-content: space-between;
+}
+
+.task-desc-cont::before {
+  position: absolute;
+  width: 90%;
+  left: 5%;
+  border-top: 1px solid rgb(215, 215, 215);
+  bottom: 30px;
+  content: "";
+}
+
+.create-tsk-btn {
   background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border-radius: 5px;
+  height: 1.5rem;
+  margin-top: 10px;
+}
+
+.create-tsk-btn::before {
+  content: '';
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.3 ease;;
+  z-index: -1;
+  border-radius: 5px;
+}
+
+.create-tsk-btn:hover {
+  background-color: #a8d2ff;
+  color: rgb(43, 43, 43);
+}
+
+.create-tsk-btn:hover::before {
+  opacity: 1;
+}
+
+.delete-tsk-btn {
+  max-height: 16px;
+  max-width: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: none;
+  background: rgba(241, 93, 93, 0.66);
+  border-radius: .3rem;
+  color: rgb(255, 255, 255);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.delete-tsk-btn i {
+  font-size: 16px;
+}
+
+.delete-tsk-btn:hover {
+  background: rgb(241, 93, 93)
 }
 
 .dropdown {

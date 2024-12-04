@@ -27,7 +27,7 @@ class ProjectView {
         //adds a class to the form for styling
         this.form.setAttribute('class', 'form');
         
-        this.form.classList.add('show');
+        this.form.classList.add('showForm');
         //clears the formData object
         this.formData = {};
         //loop to build the this.form and attach names
@@ -35,7 +35,7 @@ class ProjectView {
 
             const input = document.createElement('input');
             input.setAttribute('type', field.type);
-            input.setAttribute('class', 'task-input');
+            input.setAttribute('class', 'form-input');
             input.setAttribute('id', field.id);
             input.setAttribute('name', field.name);
             input.setAttribute('placeholder', field.placeHolder);
@@ -75,12 +75,18 @@ class ProjectView {
             this.inputValues();
         })
 
-        setTimeout(() => { //prevents closing form before form loads
-            document.addEventListener('click', (e) => {
-                if(!this.form.contains(e.target)){
-                this.form.classList.remove('show');
-                }
-            });
+        const closeFormListener = (e) => {
+            if (!this.form.contains(e.target)) {
+                this.form.classList.remove('showForm');
+                this.content.removeChild(this.form);
+                // Remove the event listener after closing the form
+                document.removeEventListener('click', closeFormListener);
+            }
+        };
+    
+        // Attach event listener only once
+        setTimeout(() => {
+            document.addEventListener('click', closeFormListener);
         }, 0);
     }
  
@@ -105,7 +111,7 @@ class ProjectView {
 
             //clear the form render
             this.form.innerHTML = '';
-            this.form.classList.remove('show');
+            this.form.classList.remove('showForm');
             //render the projects from the storage array
             this.showAllProjects();
     }
@@ -114,7 +120,8 @@ class ProjectView {
     showAllProjects() {
         this.main.innerHTML = '';
         this.dataInstance.projectsArr.forEach((project, index) => {
-            this.projectDisplay(project, index);
+            const taskHandler = this.projectDisplay(project, index);
+            taskHandler.renderAllTasks();
         });
     }
 
@@ -124,17 +131,20 @@ class ProjectView {
         const topSection = document.createElement('div');
         const buttonCont = document.createElement('div');
         const infoCont = document.createElement('div');
-
+    
         projContainer.setAttribute('class', 'proj-container');
         projContainer.setAttribute('data-project-id', index);
+        buttonCont.setAttribute('class', 'button-container');
         topSection.setAttribute('class', 'top-section');
-
+    
         for(const key in projects) {
             const inputs = document.createElement('p');
             if (key === 'Priority'){
                 inputs.innerText = `Priority ${projects[key]}`;
             } else if (key === 'Due Date') {
                 inputs.innerText = `Due date ${projects[key]}`; 
+            } else if (key === 'tasks') {
+                //do nothing
             } else {
                 inputs.innerText = `${projects[key]}`;
             };
@@ -142,10 +152,9 @@ class ProjectView {
         };
         topSection.appendChild(infoCont);
         
-        
         // Create and add the delete button
         const deleteButton = document.createElement('button');
-        deleteButton.innerText = 'X';
+        deleteButton.innerText = 'Delete project';
         deleteButton.setAttribute('class', 'delete-button');
         buttonCont.appendChild(deleteButton);
         
@@ -157,23 +166,31 @@ class ProjectView {
         
         topSection.appendChild(buttonCont);
         projContainer.appendChild(topSection);
-
+    
         const taskContainer = document.createElement('div');
         taskContainer.setAttribute('class', 'task-container');
         taskContainer.setAttribute('data-task-id', index);
         projContainer.appendChild(taskContainer);
-
+    
         // Append the project container to the main container
         this.main.appendChild(projContainer);
-
+    
+        // Initialize projectData first
+        const projectData = this.dataInstance.projectsArr[index];  
+        const taskHandler = new TaskHandler(projectData, projContainer);
+    
+    
         deleteButton.addEventListener('click', () => {
             this.deleteClick(index);
         });
-
+    
         addTaskButton.addEventListener('click', () => {
-            this.addTaskClick(index, projContainer);
+            this.addTaskClick(index, taskHandler, projContainer);
         });
+    
+        return taskHandler;
     }
+
 
     deleteClick(index) {
         this.main.innerHTML = '';
@@ -181,18 +198,24 @@ class ProjectView {
         this.showAllProjects();
     }
 
-    addTaskClick(index, projContainer) {
-        const projectData = this.dataInstance.projectsArr[index];
-        const taskHandler = new TaskHandler(projectData, projContainer);
-        const taskForm = taskHandler.generateTaskForm();
+    addTaskClick(index, taskHandler, projContainer) {
+        // Find and remove the previous task form
+        const existingTaskForm = projContainer.querySelector('.task-form-cont');
+        if (existingTaskForm) {
+            projContainer.removeChild(existingTaskForm);
+        }
+        
+        // Generate the task form using the taskHandler
+        const taskForm = taskHandler.generateTaskForm(index);
+        
+        // Append the new task form to the project container
         projContainer.appendChild(taskForm);
-
-        // this.main.appendChild(projContainer);
     }
 
     sortBy() {
         
         const dropdownContent = document.querySelector(".dropdown-content");
+        console.log('working');
         dropdownContent.classList.toggle("show-drop");
 
         // Close the dropdown if the user clicks outside
