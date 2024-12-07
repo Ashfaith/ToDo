@@ -1,8 +1,6 @@
 class Data {
     constructor() {
-        this.projectsArr = [
-          { Name: "test", Description: "test", Priority: "1", "Due Date": "2024-12-19", tasks: []}
-        ];
+        this.projectsArr = [];
     }
 
     addToArr(formData) {

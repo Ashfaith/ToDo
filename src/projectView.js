@@ -101,8 +101,9 @@ class ProjectView {
 
             this.formData.tasks = [];
 
-            // Pass the formData to your dataInstance array to be stored
             this.dataInstance.addToArr(this.formData)
+
+            this.updateLocalStorage();
 
             //reset the form
             this.form.reset();
@@ -116,12 +117,16 @@ class ProjectView {
             this.showAllProjects();
     }
 
+    updateLocalStorage() {
+        localStorage.setItem('projectsArr', JSON.stringify(this.dataInstance.projectsArr));
+        // console.log(localStorage.getItem('projectsArr'));
+    }
+
 
     showAllProjects() {
         this.main.innerHTML = '';
         this.dataInstance.projectsArr.forEach((project, index) => {
-            const taskHandler = this.projectDisplay(project, index);
-            taskHandler.renderAllTasks();
+        this.projectDisplay(project, index);
         });
     }
 
@@ -195,6 +200,7 @@ class ProjectView {
     deleteClick(index) {
         this.main.innerHTML = '';
         this.dataInstance.deleteFromArr(index);
+        this.updateLocalStorage();
         this.showAllProjects();
     }
 
@@ -237,13 +243,13 @@ class ProjectView {
             this.showAllProjects()
         });
         
-        document.querySelector('#name').addEventListener('click', () => {
+        document.querySelector('#name-sort').addEventListener('click', () => {
             this.main.innerHTML = '';
             this.dataInstance.sortByName();
             this.showAllProjects()
         });
 
-        document.querySelector('#priority').addEventListener('click', () => {
+        document.querySelector('#priority-sort').addEventListener('click', () => {
             this.main.innerHTML = '';
             this.dataInstance.sortByPriority();
             this.showAllProjects();
