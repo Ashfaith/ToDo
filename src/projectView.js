@@ -126,7 +126,8 @@ class ProjectView {
     showAllProjects() {
         this.main.innerHTML = '';
         this.dataInstance.projectsArr.forEach((project, index) => {
-        this.projectDisplay(project, index);
+            const taskHandler = this.projectDisplay(project, index);
+            taskHandler.renderAllTasks();
         });
     }
 
