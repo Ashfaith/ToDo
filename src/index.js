@@ -6,7 +6,7 @@ const dataInstance = new Data();
 let projectHandler;
 
 const storageLoad = () => {
-    if (localStorage.getItem('projectsArr') === 'undefined') {
+    if (localStorage.getItem('projectsArr') === 'undefined' || localStorage.getItem('projectsArr') === null) {
         console.log('no projects stored');
         return;
     } else {
